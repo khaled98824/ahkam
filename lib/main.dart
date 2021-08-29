@@ -1,3 +1,4 @@
+import 'package:ahkam/getx/posts_controller.dart';
 import 'package:ahkam/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final controller =Get.putAsync(() async => PostsController(),permanent: true);
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -21,7 +24,10 @@ class MyApp extends StatelessWidget {
                   color: Colors.white),
               headline5: TextStyle(
                   fontFamily: 'Montserrat-Arabic Regular',
-                  fontSize: 16,
+                  fontSize: 17,
+                  letterSpacing: 2,
+                  wordSpacing: 2,
+                  height: 1.5,
                   color: Colors.black),
               headline4: TextStyle(
                   fontFamily: 'Montserrat-Arabic Regular',
