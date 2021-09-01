@@ -1,134 +1,65 @@
-// // @dart=2.9
-//
-// import 'package:flutter/material.dart';
-// import '../services/SerchList.dart';
-//
-// class SerchData extends SearchDelegate<String> {
-//   String category;
-//
-//   SerchData({this.category});
-//
-//   Future<List<DocumentSnapshot>> _future() async {
-//     QuerySnapshot querySnapshot =
-//         await FirebaseFirestore.instance.collection("Ads2").get();
-//     final List<DocumentSnapshot> snap = querySnapshot.docs
-//         .where((DocumentSnapshot documentSnapshot) =>
-//             documentSnapshot["name"]
-//                 .toString()
-//                 .toLowerCase()
-//                 .contains(query.toLowerCase()) ||
-//             documentSnapshot["category"]
-//                 .toString()
-//                 .toLowerCase()
-//                 .contains(query.toLowerCase()))
-//         .toList();
-//     print('length ${querySnapshot.docs.length}');
-//
-//     return snap;
-//   }
-//
-//   final word = [
-//     "كلمات البحث",
-//     "مثل سيارة",
-//     "مثل الكترونيات",
-//   ];
-//   final recWord = [
-//     "كلمات البحث",
-//     "مثل سيارة",
-//     "مثل الكترونيات",
-//   ];
-//
-//   @override
-//   List<Widget> buildActions(BuildContext context) {
-//     // TODO: implement buildActions
-//     return [
-//       IconButton(
-//         icon: Icon(Icons.clear),
-//         color: Colors.red,
-//         onPressed: () {
-//           query = "";
-//         },
-//       )
-//     ];
-//   }
-//
-//   @override
-//   Widget buildLeading(BuildContext context) {
-//     // TODO: implement buildLeading
-//     return IconButton(
-//       icon: AnimatedIcon(
-//           icon: AnimatedIcons.menu_arrow,
-//           color: Colors.green,
-//           progress: transitionAnimation),
-//       onPressed: () {
-//         close(context, null);
-//       },
-//     );
-//   }
-//
-//   @override
-//   Widget buildResults(BuildContext context) {
-//     double swidth = MediaQuery.of(context).size.width;
-//     double sheight = MediaQuery.of(context).size.height;
-//     return query != ""
-//         ? Center(
-//             child: Container(
-//               height: sheight * 0.85,
-//               width: swidth,
-//               color: Colors.transparent,
-//               child: MediaQuery.removePadding(
-//                   context: context,
-//                   removeTop: true,
-//                   child: FutureBuilder<List<DocumentSnapshot>>(
-//                     future: _future(), // async work
-//                     builder: (BuildContext context,
-//                         AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
-//                       if (!snapshot.hasData) {
-//                         return Center(child: CircularProgressIndicator());
-//                       } else {
-//                         return GridView.builder(
-//                           gridDelegate:
-//                               SliverGridDelegateWithFixedCrossAxisCount(
-//                                   crossAxisCount: 2,
-//                                   childAspectRatio: swidth * 0.003),
-//                           itemBuilder: (BuildContext context, int index) {
-//                             return SerchList(snapshot.data[index]);
-//                           },
-//                           itemCount: snapshot.data.length,
-//                         );
-//                       }
-//                     },
-//                   )),
-//             ),
-//           )
-//         : Container();
-//   }
-//
-//   @override
-//   Widget buildSuggestions(BuildContext context) {
-//     final suggestionList = query.isEmpty
-//         ? recWord
-//         : word.where((p) => p.startsWith(query)).toList();
-//     // TODO: implement buildSuggestions
-//     return ListView.builder(
-//       itemBuilder: (context, index) => ListTile(
-//         onTap: () {
-//           //showResults(context);
-//         },
-//         leading: Icon(Icons.search),
-//         title: RichText(
-//           text: TextSpan(
-//             text: suggestionList[index].substring(0, query.length),
-//             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-//             children: [
-//               TextSpan(
-//                   text: suggestionList[index].substring(query.length),
-//                   style: TextStyle(color: Colors.grey))
-//             ],
-//           ),
-//         ),
-//       ),
-//       itemCount: suggestionList.length,
-//     );
-//   }
-// }
+
+
+import 'package:ahkam/screens/show_post.dart';
+import 'package:flutter/material.dart';
+
+class SearchData extends SearchDelegate<String> {
+   List<dynamic> list;
+   Map<String, dynamic> post;
+
+   SearchData({ required this.list,required this.post});
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // TODO: implement buildActions
+    return [
+      IconButton(
+          onPressed: () {
+            query = "";
+          },
+          icon: Icon(Icons.clear))
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // TODO: implement buildLeading
+    return IconButton(
+        onPressed: () {
+          close(context, '');
+        },
+        icon: Icon(Icons.arrow_back));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+   return ShowPost(post:post ,);
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    var staticList = ['aa', 'bb'];
+    var sugList = query.isEmpty
+        ? staticList
+        : list.where((element) => element['title'].startsWith(query)).toList();
+
+    // TODO: implement buildSuggestions
+    return ListView.builder(
+        itemCount: sugList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.book),
+            onTap: (){
+              post = query.isNotEmpty ?sugList[index]:null;
+              query.isNotEmpty ? showResults(context):null;
+            },
+            title: Text(
+                query.isEmpty ? staticList[index] : sugList[index]['title'],
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          );
+        });
+  }
+}

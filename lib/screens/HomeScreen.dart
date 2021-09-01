@@ -1,4 +1,8 @@
+import 'package:ahkam/getx/posts_controller.dart';
 import 'package:ahkam/models/constants.dart';
+import 'package:ahkam/page-auth/home_page.dart';
+import 'package:ahkam/screens/posts.dart';
+import 'package:ahkam/screens/show_post.dart';
 import 'package:ahkam/widgets/new_posts_list.dart';
 import 'package:ahkam/widgets/searchArea.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +31,31 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> listItems = [];
     responseList.forEach((post) {
       listItems.add(InkWell(
-        onTap: ()=> Get.to(CategoryScrollView(category: post['name'],departmentCount: post['id'],)),
+        onTap: () {
+          if(post['id'] ==8) {
+            print('object');
+            Get.to(
+              PostsListItem(
+                category: post['name'],
+                department: post['name'],
+              ),
+            );
+          }else if (post['id'] ==9){
+            print('object');
+
+            Get.to(
+              PostsListItem(
+                category: post['name'],
+                department: post['name'],
+              ),
+            );
+          }else{
+            Get.to(CategoryScrollView(
+              category: post['name'],
+              departmentCount: post['id'],
+            ));
+          }
+        },
         child: Container(
             height: 150,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -35,10 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
                 color: Colors.white,
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+                  BoxShadow(
+                      color: Colors.black.withAlpha(100), blurRadius: 10.0),
                 ]),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 22),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 22),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -59,10 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontFamily: 'Montserrat-Arabic Regular'),
                       ),
                       Spacer(),
-                      // Text(
-                      //   post["brand"],
-                      //   style: const TextStyle(fontSize: 17, color: Colors.grey),
-                      // ),
                       SizedBox(
                         height: 10,
                       ),
@@ -103,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30 - 50;
-    final items = posts;
+    final PostsController posts = Get.find();
 
     return SafeArea(
       child: Scaffold(
@@ -113,9 +139,10 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text('أحكام', style: Theme.of(context).textTheme.headline5),
-          leading: Icon(
-            Icons.menu,
+          leading: IconButton(
+           icon: Icon(Icons.menu),
             color: Colors.black,
+            onPressed: () { Get.to(HomePage()); },
           ),
           actions: <Widget>[],
         ),
@@ -127,23 +154,30 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 10,
               ),
-              AnimatedOpacity(
+              Obx(()=>AnimatedOpacity(
                 duration: const Duration(milliseconds: 400),
                 opacity: closeTopContainer ? 0 : 1,
                 child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 400),
-                    width: size.width,
-                    alignment: Alignment.topCenter,
-                    height: closeTopContainer ? 0 : categoryHeight,
-                    child: ListView.builder(
-                        itemCount: items.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) => CategoriesScroller(
-                              category: items[index]['category'].toString(),
-                              quz: items[index]['quz'].toString(),
-                              date: items[index]['date'].toString(),
-                            ))),
-              ),
+                  duration: const Duration(milliseconds: 400),
+                  width: size.width,
+                  alignment: Alignment.topCenter,
+                  height: closeTopContainer ? 0 : categoryHeight,
+                  child: ListView.builder(
+                      itemCount: posts.posts.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: (){
+                          Get.to(ShowPost(post: posts.posts[index],));
+                        },
+                        child: CategoriesScroller(
+                          category: posts.posts[index]['category'].toString(),
+                          quz: posts.posts[index]['quz'].toString(),
+                          date: posts.posts[index]['date'].toString(),
+                        ),
+                      )
+                  ),
+                ),
+              ),),
               Expanded(
                   child: ListView.builder(
                       controller: controller,
@@ -178,4 +212,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

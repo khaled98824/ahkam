@@ -24,9 +24,9 @@ class CategoryScrollView extends StatelessWidget {
           floating: true,
           pinned: true,
           flexibleSpace: FlexibleSpaceBar(
-            background: Image.network(
-              'https://firebasestorage.googleapis.com/v0/b/souq-alfurat-89023.appspot.com/o/WhatsApp%20Image%202020-09-15%20at%2011.23.35%20AM.jpeg?alt=media&token=a7c3f2d7-2629-4519-9c61-93444f989688',
-              fit: BoxFit.cover,
+            background: Image.asset(
+              'assets/images/desIslamic.jpg',
+              fit: BoxFit.fill,
             ),
             title: Text(
               category,
@@ -48,25 +48,31 @@ class CategoryScrollView extends StatelessWidget {
         ),
         SliverToBoxAdapter(
           child: GridView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: departments[departmentCount].length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-                mainAxisExtent: 44,
-                mainAxisSpacing: 2,
-                crossAxisSpacing: 2,
-                childAspectRatio: 0.5,
-              ),
-              primary: false,
-              shrinkWrap: true,
-              itemBuilder: (context, index) => info(FontAwesomeIcons.book,
-                      departments[departmentCount][index], () {
-
-                    Get.to(PostsListItem(
-                      category: category,
-                      department: departments[departmentCount][index],
-                    ));
-                  }, Color.fromRGBO(122, 112, 112, 1))),
+            scrollDirection: Axis.vertical,
+            itemCount: departments[departmentCount].length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1,
+              mainAxisExtent: 44,
+              mainAxisSpacing: 2,
+              crossAxisSpacing: 2,
+              childAspectRatio: 0.5,
+            ),
+            primary: false,
+            shrinkWrap: true,
+            itemBuilder: (context, index) => info(
+              FontAwesomeIcons.book,
+              departments[departmentCount][index],
+              () {
+                Get.to(
+                  PostsListItem(
+                    category: category,
+                    department: departments[departmentCount][index],
+                  ),
+                );
+              },
+              Color.fromRGBO(122, 112, 112, 1),
+            ),
+          ),
         ),
       ],
     ));

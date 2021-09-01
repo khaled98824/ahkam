@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "462822524496",
+    "project_id": "ahkam-app-f334a",
+    "storage_bucket": "ahkam-app-f334a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462822524496:android:eae90269d55727244df355",
+        "android_client_info": {
+          "package_name": "com.ahkam.khaled.ahkam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462822524496-3aa4vfp16fnk1dfdlsjnu3mhj391m5va.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ahkam.khaled.ahkam",
+            "certificate_hash": "c3b875fc20c8694560fccc41f47919233484ea93"
+          }
+        },
+        {
+          "client_id": "462822524496-0ldm3hp38kdn7glq0lgivitr502gmt0q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtUM7iNQkfNzChAp1ztyUveBui_szA3oY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462822524496-0ldm3hp38kdn7glq0lgivitr502gmt0q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
