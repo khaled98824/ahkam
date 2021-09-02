@@ -25,7 +25,7 @@ class CategoryScrollView extends StatelessWidget {
           pinned: true,
           flexibleSpace: FlexibleSpaceBar(
             background: Image.asset(
-              'assets/images/desIslamic.jpg',
+              'assets/images/wp.jpg',
               fit: BoxFit.fill,
             ),
             title: Text(

@@ -40,7 +40,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 department: post['name'],
               ),
             );
-          }else if (post['id'] ==9){
+          }else if (post['id'] ==7){
+            print('object');
+
+            Get.to(
+              PostsListItem(
+                category: post['name'],
+                department: post['name'],
+              ),
+            );
+          }
+          else if (post['id'] ==9){
             print('object');
 
             Get.to(
@@ -140,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           title: Text('أحكام', style: Theme.of(context).textTheme.headline5),
           leading: IconButton(
-           icon: Icon(Icons.menu),
+           icon: Icon(Icons.admin_panel_settings,size: 29,color: Colors.blue.shade800,),
             color: Colors.black,
             onPressed: () { Get.to(HomePage()); },
           ),
@@ -167,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) => InkWell(
                         onTap: (){
-                          Get.to(ShowPost(post: posts.posts[index],));
+                          Get.to(ShowPost(post: posts.posts[index],isFromSearch: true,));
                         },
                         child: CategoriesScroller(
                           category: posts.posts[index]['category'].toString(),

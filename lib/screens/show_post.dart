@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 
 class ShowPost extends StatelessWidget {
   final Map<String, dynamic> post;
+  final bool isFromSearch ;
 
-  const ShowPost({required this.post});
+  const ShowPost({required this.post,required this.isFromSearch});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+         appBar:isFromSearch ? AppBar(
           title: Text(
             post['title'],
             style: Theme.of(context).textTheme.headline4,
@@ -17,7 +18,7 @@ class ShowPost extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           centerTitle: true,
-        ),
+        ):null,
         body: SingleChildScrollView(
           child:  Card(
             child: Column(

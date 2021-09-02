@@ -34,12 +34,12 @@ class SearchData extends SearchDelegate<String> {
   @override
   Widget buildResults(BuildContext context) {
     // TODO: implement buildResults
-   return ShowPost(post:post ,);
+   return ShowPost(post:post ,isFromSearch: false);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    var staticList = ['aa', 'bb'];
+    var staticList = ['ماحكم اطالة الثوب', 'ماحكم الصلاة بالقبور','ماهو حكم سفر مجموعة من النساء دون محرم'];
     var sugList = query.isEmpty
         ? staticList
         : list.where((element) => element['title'].startsWith(query)).toList();

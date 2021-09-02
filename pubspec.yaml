@@ -50,7 +50,7 @@ flutter_icons:
 
 flutter_native_splash:
   color: "#ffffff"
-  image: assets/images/islamic-des.png
+  image: assets/images/splash2.png
   android: true
   ios: true
   android_gravity: fill

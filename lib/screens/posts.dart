@@ -49,7 +49,7 @@ class PostsListItem extends StatelessWidget {
                                 controller.postsByDepartment[index]['title'],
                                 () {
                               Get.to(ShowPost(
-                                post: controller.postsByDepartment[index],
+                                post: controller.postsByDepartment[index],isFromSearch: true,
                               ));
                             }, Color.fromRGBO(122, 112, 112, 1)));
                   } else if (data.hasError) {
