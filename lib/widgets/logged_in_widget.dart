@@ -286,18 +286,23 @@ class LoggedInWidget extends StatelessWidget {
                                         views: 0,
                                       );
                                       try {
-                                        if (category.length>1 || department.length>1 ) {
-                                         // postsController.addPost(post);
-                                          textController.clear();
-                                          sourceController.clear();
-                                          titleController.clear();
-                                          desController.clear();
-                                          qwzController.clear();
-                                          department= "";
-                                          category ="";
-                                          postsController.department.value = '';
-                                          postsController.category.value = '';
-                                          Get.snackbar('تمت الإضافة بنجاح', 'شكراً تمت الاضافة بارك الله بك');
+                                        if (category.length>1 && department.length>1 ) {
+                                          postsController.addPost(post).then((value) {
+                                            textController.clear();
+                                            sourceController.clear();
+                                            titleController.clear();
+                                            desController.clear();
+                                            qwzController.clear();
+                                            department= "";
+                                            category ="";
+                                            postsController.department.value = '';
+                                            postsController.category.value = '';
+                                            Get.snackbar('تمت الإضافة بنجاح', 'شكراً تمت الاضافة بارك الله بك');
+
+                                          }).catchError((err){
+                                            Get.snackbar('معلومات غير صحيحة','حاول مجددا');
+                                            throw(err);
+                                          });
 
                                         }  else{
                                           Get.snackbar('اختر الباب الرئيسي والفرعي', 'الرجاء اختيار الأبواب');

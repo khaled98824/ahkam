@@ -38,6 +38,7 @@ class PostsController extends GetxController {
     if (res.statusCode == 200) {
       jsonOpj = json.decode(res.body);
       posts.addAll(jsonOpj);
+      print('posts count = ${posts.length}');
       return posts;
     } else {}
   }
@@ -65,7 +66,7 @@ class PostsController extends GetxController {
     } else {}
   }
 
-  addPost(Posts posts) async {
+  Future addPost(Posts posts) async {
     var res = await http
         .post(Uri.parse('https://ahkam-app.herokuapp.com/posts'), body: {
       'title': posts.title,
@@ -84,5 +85,6 @@ class PostsController extends GetxController {
       'deviceNo': posts.deviceNo,
       'views': posts.views.toString(),
     });
+    return res.body;
   }
 }

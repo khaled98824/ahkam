@@ -1,5 +1,6 @@
 import 'package:ahkam/getx/posts_controller.dart';
 import 'package:ahkam/services/SerchData.dart';
+import 'package:ahkam/services/new_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +15,7 @@ class _SearchAreaDesignState extends State<SearchAreaDesign> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-       showSearch(context: context, delegate: SearchData(list: postsController.posts, post: {}));
+       showSearch(context: context, delegate: Search(list: postsController.posts, post: {}));
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 22, vertical: 6),

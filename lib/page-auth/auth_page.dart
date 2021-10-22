@@ -101,7 +101,7 @@ class _AuthPageState extends State<AuthPage> {
       textCapitalization: TextCapitalization.words,
       enableSuggestions: false,
       validator: (value) {
-        if (value!.isEmpty || value!.length < 4 || value!.contains(' ')) {
+        if (value!.isEmpty || value.length < 4 || value.contains(' ')) {
           return 'Please enter at least 4 characters without space';
         } else {
           return null;
