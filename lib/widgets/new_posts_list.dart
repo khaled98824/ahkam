@@ -16,7 +16,7 @@ class CategoriesScroller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double categoryHeight =
-        MediaQuery.of(context).size.height * 0.30 - 90;
+        MediaQuery.of(context).size.height * 0.30 - 80;
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
@@ -56,7 +56,7 @@ class CategoriesScroller extends StatelessWidget {
                         quz,
                         textAlign: TextAlign.end,
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
+                        maxLines: MediaQuery.of(context).size.height >620 ?4:2,
                         style: TextStyle(fontSize: 13, color: Colors.white),
                       ),
                     ],

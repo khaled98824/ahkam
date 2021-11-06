@@ -1,5 +1,5 @@
 import 'package:ahkam/models/constants.dart';
-import 'package:ahkam/widgets/logged_in_widget.dart';
+import 'package:ahkam/widgets/add_new_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

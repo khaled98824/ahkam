@@ -1,33 +1,48 @@
 import 'package:ahkam/getx/posts_controller.dart';
 import 'package:ahkam/models/ModelPost.dart';
 import 'package:ahkam/models/constants.dart';
-import 'package:ahkam/provider/email_sign_in.dart';
-import 'package:get/get.dart';
-
-import '../provider/google_sign_in.dart';
+import 'package:ahkam/screens/list_posts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
-class LoggedInWidget extends StatelessWidget {
-  final BuildContext context;
-
-  LoggedInWidget({required this.context});
+class EditPost extends StatefulWidget {
+   final numberOfPost ;
+   EditPost({Key? key,this.numberOfPost}) : super(key: key);
 
   @override
+  _EditPostState createState() => _EditPostState();
+}
+
+class _EditPostState extends State<EditPost> {
+  final PostsController postsController = Get.find();
+  final user = FirebaseAuth.instance.currentUser;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController qwzController = TextEditingController();
+  TextEditingController textController = TextEditingController();
+  TextEditingController desController = TextEditingController();
+  TextEditingController sourceController = TextEditingController();
+  final _formkey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    final PostsController postsController = Get.find();
-    final user = FirebaseAuth.instance.currentUser;
-    TextEditingController nameController = TextEditingController();
-    TextEditingController titleController = TextEditingController();
-    TextEditingController qwzController = TextEditingController();
-    TextEditingController textController = TextEditingController();
-    TextEditingController desController = TextEditingController();
-    TextEditingController sourceController = TextEditingController();
-    final _formkey = GlobalKey<FormState>();
+
+    nameController.text= postsController.userPosts[widget.numberOfPost]['creatorName'];
+    titleController.text= postsController.userPosts[widget.numberOfPost]['title'];
+    qwzController.text= postsController.userPosts[widget.numberOfPost]['quz'];
+    textController.text= postsController.userPosts[widget.numberOfPost]['ar_text'];
+    desController.text= postsController.userPosts[widget.numberOfPost]['description'];
+    sourceController.text= postsController.userPosts[widget.numberOfPost]['source'];
+    category = postsController.userPosts[widget.numberOfPost]['category'];
+    department = postsController.userPosts[widget.numberOfPost]['department'];
 
     return Scaffold(
-      appBar: AppBar(title: Text('واجهة الإضافة'),centerTitle: true,),
+      appBar: AppBar(title: Text('Edit Post'),),
       body: Form(
           key: _formkey,
           child:  Container(
@@ -247,17 +262,17 @@ class LoggedInWidget extends StatelessWidget {
                                   if (user!.photoURL != null)
                                     CircleAvatar(
                                       maxRadius: 25,
-                                      backgroundImage: NetworkImage(user.photoURL!),
+                                      backgroundImage: NetworkImage(user!.photoURL!),
                                     ),
                                   SizedBox(height: 8),
-                                  if (user.displayName != null)
+                                  if (user!.displayName != null)
                                     Text(
-                                      'Name: ' + user.displayName!,
+                                      'Name: ' + user!.displayName!,
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   SizedBox(height: 8),
                                   Text(
-                                    'Email: ' + user.email!,
+                                    'Email: ' + user!.email!,
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   SizedBox(height: 8),
@@ -267,11 +282,13 @@ class LoggedInWidget extends StatelessWidget {
                                           .currentState!
                                           .validate();
                                       _formkey.currentState!.save();
-
+                                      var user = FirebaseAuth.instance.currentUser;
                                       final post = Posts(
+                                        id: postsController.userPosts[widget.numberOfPost]['_id'],
                                         title: titleController.text,
                                         source: sourceController.text,
                                         creatorName: nameController.text,
+                                        creatorEmail:user!.email.toString(),
                                         quz: qwzController.text,
                                         ar_text: textController.text,
                                         createdDate: DateTime.now().toString(),
@@ -287,7 +304,7 @@ class LoggedInWidget extends StatelessWidget {
                                       );
                                       try {
                                         if (category.length>1 && department.length>1 ) {
-                                          postsController.addPost(post).then((value) {
+                                          postsController.editPost(post).then((value) {
                                             textController.clear();
                                             sourceController.clear();
                                             titleController.clear();
@@ -297,8 +314,10 @@ class LoggedInWidget extends StatelessWidget {
                                             category ="";
                                             postsController.department.value = '';
                                             postsController.category.value = '';
-                                            Get.snackbar('تمت الإضافة بنجاح', 'شكراً تمت الاضافة بارك الله بك');
+                                            Get.snackbar('تم التعديل بنجاح', 'شكراً تمت الاضافة بارك الله بك');
+                                            Navigator.of(context).pop();
 
+                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>ListOfPosts()));
                                           }).catchError((err){
                                             Get.snackbar('معلومات غير صحيحة','حاول مجددا');
                                             throw(err);
@@ -321,19 +340,6 @@ class LoggedInWidget extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(5),
                                         color: Colors.deepOrange),
                                   ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                     try{
-                                       final provider = Provider.of<GoogleSignInProvider>(
-                                           context,
-                                           listen: false);
-                                       provider.logout();
-                                     }catch(err){
-                                       throw err;
-                                     }
-                                    },
-                                    child: Text('Logout'),
-                                  )
                                 ],
                               ),
                             )),
@@ -341,10 +347,7 @@ class LoggedInWidget extends StatelessWidget {
                     ],
                   )))),
     );
-
-
   }
-
   bool choseCategory = false;
   String category = '';
   String department = '';
@@ -447,3 +450,5 @@ class LoggedInWidget extends StatelessWidget {
     );
   }
 }
+
+

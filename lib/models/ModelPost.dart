@@ -8,6 +8,7 @@ class Posts {
   final String en_text;
   final String source;
   final String creatorName;
+  final String creatorEmail;
   final String category;
   final String department;
   final String createdDate;
@@ -15,9 +16,12 @@ class Posts {
   final String description;
   final String deviceNo;
   final int views;
+  final String? id;
 
 
   Posts(  {
+    this.id,
+    required this.creatorEmail,
     required this.title,
     required this.source,
     required this.creatorName,

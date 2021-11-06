@@ -1,6 +1,7 @@
 import 'package:ahkam/screens/show_post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class SerchList extends StatelessWidget {
@@ -14,8 +15,12 @@ class SerchList extends StatelessWidget {
     double sheight = MediaQuery.of(context).size.height;
     return Padding(
       padding:
-      EdgeInsets.only(left: swidth * 0.02, right: swidth * 0.02, bottom: 0),
-      child:Container(
+      EdgeInsets.only(left: swidth * 0.02, right: swidth * 0.02, bottom: 5.0,),
+      child:InkWell(
+        onTap: (){
+          Get.to(()=>ShowPost(post: lis, isFromSearch: true,));
+        },
+        child: Container(
           padding: EdgeInsets.all(swidth * 0.015),
           height: sheight * 0.09,
           //width: MediaQuery.of(context).size.width*0.75,
@@ -40,7 +45,7 @@ class SerchList extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: sheight * 0.015,
+                          fontSize: sheight * 0.019,
                           fontWeight: FontWeight.bold),
                     )),
                 SizedBox(height: 8,),
@@ -61,7 +66,7 @@ class SerchList extends StatelessWidget {
               ],
             ),
           )
-          )
+      ),)
     );
   }
 }

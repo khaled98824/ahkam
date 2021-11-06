@@ -5,6 +5,7 @@ import 'package:ahkam/screens/posts.dart';
 import 'package:ahkam/screens/show_post.dart';
 import 'package:ahkam/widgets/new_posts_list.dart';
 import 'package:ahkam/widgets/searchArea.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

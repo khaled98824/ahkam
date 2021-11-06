@@ -90,13 +90,14 @@ class Search extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     final word = [
       "كلمات البحث",
-      "مثل سيارة",
-      "مثل الكترونيات",
+      "حكم اسبال الازار",
+
     ];
     final recWord = [
       "كلمات البحث",
-      "مثل سيارة",
-      "مثل الكترونيات",
+      "حكم التميمة",
+      "الشرك الاصغر",
+      "حكم حلق اللحية",
     ];
 
     final suggestionList = query.isEmpty
